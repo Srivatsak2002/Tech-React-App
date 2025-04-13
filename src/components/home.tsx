@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, MessageSquare } from "lucide-react";
+import TechExplainer from "./TechExplainer/TechExplainer";
 
 const technologies = [
   {
@@ -368,6 +369,7 @@ function Home() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [selectedTech, setSelectedTech] = useState(technologies[0]);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isExplainerOpen, setIsExplainerOpen] = useState(false);
 
   return (
     <div className="flex h-screen bg-gray-900 overflow-hidden text-gray-100">
@@ -380,6 +382,22 @@ function Home() {
           <Menu className="h-6 w-6" />
         </button>
       </div>
+
+      {/* Tech Explainer toggle button */}
+      <div className="fixed top-4 right-4 z-50">
+        <button
+          onClick={() => setIsExplainerOpen(!isExplainerOpen)}
+          className="p-2 rounded-md bg-gray-800 shadow-md text-blue-400 hover:text-blue-300"
+        >
+          <MessageSquare className="h-6 w-6" />
+        </button>
+      </div>
+
+      {/* Tech Explainer sidebar */}
+      <TechExplainer 
+        isOpen={isExplainerOpen} 
+        onClose={() => setIsExplainerOpen(false)} 
+      />
 
       {/* Sidebar for mobile */}
       {isMobileSidebarOpen && (
@@ -449,7 +467,7 @@ function Home() {
                 {isSidebarOpen ? (
                   <span className="font-medium">{tech.name}</span>
                 ) : (
-                  <span className="font-medium">{tech.name.charAt(0)}</span>
+                  <span className="font-medium text-xs">{tech.name.substring(0, 2)}</span>
                 )}
               </button>
             ))}
